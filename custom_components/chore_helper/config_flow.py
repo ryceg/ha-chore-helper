@@ -117,6 +117,7 @@ def general_schema_definition(
             handler.options,
             const.DEFAULT_SHOW_OVERDUE_TODAY,
         ): bool,
+        optional(const.CONF_OWNERS, handler.options, []): selector.TextSelector(),
     }
 
     return schema
