@@ -1,17 +1,13 @@
 {
   "domain": "chore_helper",
   "name": "Chore",
-  "codeowners": [
-    "@bmcclure"
-  ],
+  "codeowners": ["@ryceg"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/bmcclure/ha-chore-helper",
+  "documentation": "https://github.com/ryceg/ha-chore-helper",
   "integration_type": "helper",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/bmcclure/ha-chore-helper/issues",
-  "requirements": [
-    "python-dateutil>=2.8.2"
-  ],
+  "issue_tracker": "https://github.com/ryceg/ha-chore-helper/issues",
+  "requirements": ["python-dateutil>=2.8.2"],
   "version": "0.2.0"
 }

@@ -24,6 +24,7 @@ ATTR_ADD_DATES = "add_dates"
 ATTR_REMOVE_DATES = "remove_dates"
 ATTR_OWNERS = "owners"
 ATTR_NOTES = "notes"
+ATTR_DUE_TIME = "due_time"
 
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 DEVICE_CLASS = "chore_helper__schedule"

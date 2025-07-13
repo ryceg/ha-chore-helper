@@ -208,13 +208,36 @@ class Chore(RestoreEntity):
 
     @property
     def owners(self) -> list[str]:
-        """Return owners attribute."""
+        """Return owners attribute as person names."""
+        if not self._owners:
+            return []
+        
+        owner_names = []
+        for entity_id in self._owners:
+            if entity_id.startswith("person."):
+                state = self.hass.states.get(entity_id)
+                if state:
+                    owner_names.append(state.attributes.get("friendly_name", state.name))
+                else:
+                    owner_names.append(entity_id.replace("person.", "").replace("_", " ").title())
+            else:
+                owner_names.append(entity_id)
+        return owner_names
+    
+    @property
+    def owner_entities(self) -> list[str]:
+        """Return raw owner entity IDs."""
         return self._owners
 
     @property
     def notes(self) -> str | None:
         """Return notes attribute."""
         return self._notes
+
+    @property
+    def due_time(self) -> str | None:
+        """Return due time as string."""
+        return self._due_time.strftime("%H:%M:%S") if self._due_time else None
 
     @property
     def hidden(self) -> bool:
@@ -254,7 +277,9 @@ class Chore(RestoreEntity):
             const.ATTR_ADD_DATES: self.add_dates,
             const.ATTR_REMOVE_DATES: self.remove_dates,
             const.ATTR_OWNERS: self.owners,
+            "owner_entities": self.owner_entities,
             const.ATTR_NOTES: self.notes,
+            const.ATTR_DUE_TIME: self.due_time,
             ATTR_UNIT_OF_MEASUREMENT: self.native_unit_of_measurement,
             # Needed for translations to work
             ATTR_DEVICE_CLASS: self.DEVICE_CLASS,

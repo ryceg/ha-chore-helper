@@ -117,7 +117,12 @@ def general_schema_definition(
             handler.options,
             const.DEFAULT_SHOW_OVERDUE_TODAY,
         ): bool,
-        optional(const.CONF_OWNERS, handler.options, []): selector.TextSelector(),
+        optional(const.CONF_OWNERS, handler.options, []): selector.EntitySelector(
+            selector.EntitySelectorConfig(
+                domain="person",
+                multiple=True,
+            )
+        ),
         optional(const.CONF_NOTES, handler.options): selector.TextSelector(selector.TextSelectorConfig(multiline=True)),
     }
 
@@ -257,6 +262,10 @@ async def detail_config_schema(
         options_schema[
             required(const.CONF_START_DATE, handler.options, helpers.now().date())
         ] = selector.DateSelector()
+
+        options_schema[optional(const.CONF_DUE_TIME, handler.options)] = (
+            selector.TimeSelector()
+        )
 
     return vol.Schema(options_schema)
 
