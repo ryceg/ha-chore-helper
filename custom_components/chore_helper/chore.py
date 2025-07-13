@@ -54,6 +54,7 @@ class Chore(RestoreEntity):
         "config_entry",
         "last_completed",
         "_owners",
+        "_notes",
     )
 
     def __init__(self, config_entry: ConfigEntry) -> None:
@@ -102,6 +103,7 @@ class Chore(RestoreEntity):
         self._add_dates: str = None
         self._remove_dates: str = None
         self._owners: list[str] = config.get(const.CONF_OWNERS, [])
+        self._notes: str | None = config.get(const.CONF_NOTES)
         try:
             self._start_date = helpers.to_date(config.get(const.CONF_START_DATE))
         except ValueError:
@@ -208,6 +210,11 @@ class Chore(RestoreEntity):
         return self._owners
 
     @property
+    def notes(self) -> str | None:
+        """Return notes attribute."""
+        return self._notes
+
+    @property
     def hidden(self) -> bool:
         """Return the hidden attribute."""
         return self._hidden
@@ -245,6 +252,7 @@ class Chore(RestoreEntity):
             const.ATTR_ADD_DATES: self.add_dates,
             const.ATTR_REMOVE_DATES: self.remove_dates,
             const.ATTR_OWNERS: self.owners,
+            const.ATTR_NOTES: self.notes,
             ATTR_UNIT_OF_MEASUREMENT: self.native_unit_of_measurement,
             # Needed for translations to work
             ATTR_DEVICE_CLASS: self.DEVICE_CLASS,

@@ -118,6 +118,7 @@ def general_schema_definition(
             const.DEFAULT_SHOW_OVERDUE_TODAY,
         ): bool,
         optional(const.CONF_OWNERS, handler.options, []): selector.TextSelector(),
+        optional(const.CONF_NOTES, handler.options): selector.TextSelector(selector.TextSelectorConfig(multiline=True)),
     }
 
     return schema

@@ -70,7 +70,8 @@
                     "icon_overdue": "Icon overdue (mdi:bell-alert) - optional",
                     "forecast_dates": "Number of future due dates to forecast",
                     "show_overdue_today": "Show overdue chore today on calendar",
-                    "owners": "Owners (comma separated)"
+                    "owners": "Owners (comma separated)",
+                    "notes": "Notes"
                 }
             },
             "detail": {

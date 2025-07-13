@@ -23,6 +23,7 @@ ATTR_OFFSET_DATES = "offset_dates"
 ATTR_ADD_DATES = "add_dates"
 ATTR_REMOVE_DATES = "remove_dates"
 ATTR_OWNERS = "owners"
+ATTR_NOTES = "notes"
 
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 DEVICE_CLASS = "chore_helper__schedule"
@@ -53,6 +54,7 @@ CONF_START_DATE = "start_date"
 CONF_SENSORS = "sensors"
 CONF_DATE_FORMAT = "date_format"
 CONF_OWNERS = "owners"
+CONF_NOTES = "notes"
 
 DEFAULT_NAME = DOMAIN
 DEFAULT_FIRST_MONTH = "jan"
