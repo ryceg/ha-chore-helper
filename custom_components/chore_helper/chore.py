@@ -548,6 +548,12 @@ class Chore(RestoreEntity):
             if self._start_date is not None
             else date(helpers.now().date().year - 1, 1, 1)
         )
+        if (
+            day1 == start_date
+            and self.last_completed is not None
+            and self.last_completed.date() == day1
+        ):
+            day1 = day1 + relativedelta(days=1)
 
         if self.last_completed is not None:
             last_completed = self.last_completed.date()
