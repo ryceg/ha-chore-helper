@@ -1,0 +1,31 @@
+type: custom:auto-entities
+card:
+  type: entities
+  title: Household Chores
+filter:
+  include:
+    - domain: sensor
+      integration: chore_helper
+      options:
+        type: custom:multiple-entity-row
+        name: this.entity_id
+        state_header: Due
+        entities:
+          - entity: this.entity_id
+            name: false
+            state_color: true
+          - entity: this.entity_id
+            name: "Complete"
+            icon: mdi:check-circle
+            tap_action:
+              action: call-service
+              service: chore_helper.complete
+              service_data:
+                entity_id: this.entity_id
+            styles:
+              color: "#4CAF50"
+              cursor: pointer
+show_empty: false
+sort:
+  method: state
+  reverse: false
