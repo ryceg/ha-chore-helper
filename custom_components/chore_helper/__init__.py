@@ -60,6 +60,7 @@ SENSOR_SCHEMA = vol.Schema(
         vol.Optional(const.CONF_DAYS_BEFORE_DUE_THRESHOLD): vol.All(
             vol.Coerce(int), vol.Range(min=0, max=365)
         ),
+        vol.Optional(const.CONF_DUE_TIME): cv.time,
     },
     extra=vol.ALLOW_EXTRA,
 )

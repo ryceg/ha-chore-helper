@@ -105,6 +105,7 @@ class Chore(RestoreEntity):
         self._owners: list[str] = config.get(const.CONF_OWNERS, [])
         self._notes: str | None = config.get(const.CONF_NOTES)
         self._days_before_due_threshold: int = config.get(const.CONF_DAYS_BEFORE_DUE_THRESHOLD, 0)
+        self._due_time: time | None = config.get(const.CONF_DUE_TIME)
         try:
             self._start_date = helpers.to_date(config.get(const.CONF_START_DATE))
         except ValueError:
@@ -480,6 +481,7 @@ class Chore(RestoreEntity):
         """Pick the first event from chore dates, update attributes."""
         LOGGER.debug("(%s) Looking for next chore date", self._attr_name)
         self._last_updated = helpers.now()
+        current_date_time = helpers.now()
         today = self._last_updated.date()
         self._next_due_date = self.get_next_due_date(self._calculate_start_date())
         if self._next_due_date is not None:
@@ -503,10 +505,15 @@ class Chore(RestoreEntity):
                 elif self._days < 0:
                     self._attr_icon = self._icon_overdue
                 elif self._days == 0:
-                    self._attr_icon = self._icon_today
+                    if self._due_time is not None and current_date_time.time() >= self._due_time:
+                        self._attr_icon = self._icon_overdue
+                        self._overdue = True
+                    else:
+                        self._attr_icon = self._icon_today
                 elif self._days == 1:
                     self._attr_icon = self._icon_tomorrow
-                self._overdue = self._days < 0
+                if self._days != 0 or not self._overdue:
+                    self._overdue = self._days < 0
                 self._overdue_days = 0 if self._days > -1 else abs(self._days)
             else:
                 self._attr_state = None

@@ -56,6 +56,7 @@ CONF_DATE_FORMAT = "date_format"
 CONF_OWNERS = "owners"
 CONF_NOTES = "notes"
 CONF_DAYS_BEFORE_DUE_THRESHOLD = "days_before_due_threshold"
+CONF_DUE_TIME = "due_time"
 
 DEFAULT_NAME = DOMAIN
 DEFAULT_FIRST_MONTH = "jan"
