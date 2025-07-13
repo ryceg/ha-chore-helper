@@ -160,6 +160,6 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/custom-components/blueprint.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Ben%20McClure%20%40bmcclure-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-ryceg%20%40ryceg-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/bmcclure/ha-chore-helper.svg?style=for-the-badge
 [releases]: https://github.com/bmcclure/ha-chore-helper/releases
