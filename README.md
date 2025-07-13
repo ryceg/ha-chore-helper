@@ -20,7 +20,7 @@ know how it could be improved!
 **This component will set up the following platforms.**
 
 | Platform   | Description                           |
-| ---------- | ------------------------------------- |
+| :--------- | :------------------------------------ |
 | `sensor`   | Contains the state for a single chore |
 | `calendar` | A Chore calendar for easy tracking    |
 
@@ -45,7 +45,6 @@ calendars, automations, and sensors.
 4. Download _all_ the files from the `custom_components/chore_helper/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant.
-
 
 ## Configuration
 
@@ -83,6 +82,7 @@ Daily chores simply get scheduled to occur every day, or every N days.
 Weekly chores can be scheduled to occur on certain days of the week, or the weekdays can be left blank if you just want it to happen every 2 weeks regardless of the day.
 
 Monthly chores can be scheduled in several ways based on the options you choose:
+
 - On a certain day each due month
 - On the Nth chosen weekday of the month
 - On the chosen weekday of the Nth week of the month
@@ -102,48 +102,52 @@ The other attributes are the next due date, the last completed date, whether the
 
 This service can be called to mark a chore as completed. It will automatically schedule the next due date for the chore, and adjust future due dates if necessary (e.g. when scheduling "after" chores).
 
-| Service Data Attribute | Optional | Description                                                                             |
-| ---------------------- | -------- | --------------------------------------------------------------------------------------- |
-| `entity_id`            | No       | The entity ID of the chore or chores to complete.                                       |
-| `last_completed`       | Yes      | The date the chore was last completed. If not specified, the current date will be used. |
+| Service Data Attribute | Type     | Description                                                                             |
+| :--------------------- | :------- | :-------------------------------------------------------------------------------------- |
+| `entity_id`            | Required | The entity ID of the chore or chores to complete.                                       |
+| `last_completed`       | Optional | The date the chore was last completed. If not specified, the current date will be used. |
 
 ### chore_helper.add_date
 
 This service can be called to add a due date to a chore manually. This is useful for custom chores that don't have any due dates scheduled automatically.
 
-| Service Data Attribute | Optional | Description                                                |
-| ---------------------- | -------- | ---------------------------------------------------------- |
-| `entity_id`            | No       | The entity ID of the chore or chores to add a due date to. |
-| `date`                 | No       | The date the chore is due.                                 |
+| Service Data Attribute | Type     | Description                                                |
+| :--------------------- | :------- | :--------------------------------------------------------- |
+| `entity_id`            | Required | The entity ID of the chore or chores to add a due date to. |
+| `date`                 | Required | The date the chore is due.                                 |
 
 ### chore_helper.offset_date
 
 This service can be called to offset the next due date of a chore. This will only affect the next due date for "every" chores, but will affect all future due dates for "after" chores since they are fluid and based on the previous date.
 
-| Service Data Attribute | Optional | Description                                                                     |
-| ---------------------- | -------- | ------------------------------------------------------------------------------- |
-| `entity_id`            | No       | The entity ID of the chore or chores to offset the due date of.                 |
-| `offset`               | No       | The number of days to offset the due date by. This can be positive or negative. |
-| `date`                 | Yes      | The date of the chore to offset, or the next due date if blank.                 |
+| Service Data Attribute | Type     | Description                                                                     |
+| :--------------------- | :------- | :------------------------------------------------------------------------------ |
+| `entity_id`            | Required | The entity ID of the chore or chores to offset the due date of.                 |
+| `offset`               | Required | The number of days to offset the due date by. This can be positive or negative. |
+| `date`                 | Optional | The date of the chore to offset, or the next due date if blank.                 |
 
 ### chore_helper.remove_date
 
 This service can be called to remove a chore date (e.g. skip a chore). This removes the next due date if no date is passed. If a date is passed, it will remove the due date that matches the date passed. Even if no due date currently matches, the removal will persist so that if a due date is added that matches the date passed, it will be removed as well.
 
-| Service Data Attribute | Optional | Description                                                     |
-| ---------------------- | -------- | --------------------------------------------------------------- |
-| `entity_id`            | No       | The entity ID of the chore or chores to add a due date to.      |
-| `date`                 | Yes      | The date of the chore to remove, or the next due date if blank. |
+| Service Data Attribute | Type     | Description                                                     |
+| :--------------------- | :------- | :-------------------------------------------------------------- |
+| `entity_id`            | Required | The entity ID of the chore or chores to add a due date to.      |
+| `date`                 | Optional | The date of the chore to remove, or the next due date if blank. |
 
 ### chore_helper.update_state
 
 This service can be called to update the state of a chore. This is mainly useful for custom chores that don't automatically update themselves.
 
+| Service Data Attribute | Type     | Description                                                                |
+| :--------------------- | :------- | :------------------------------------------------------------------------- |
+| `entity_id`            | Required | The entity ID of the chore or chores to update their state and attributes. |
+
 ## Contributions are welcome!
 
 If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
-***
+---
 
 [buymecoffee]: https://www.buymeacoffee.com/benmcclure
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
