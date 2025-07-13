@@ -104,6 +104,7 @@ class Chore(RestoreEntity):
         self._remove_dates: str = None
         self._owners: list[str] = config.get(const.CONF_OWNERS, [])
         self._notes: str | None = config.get(const.CONF_NOTES)
+        self._days_before_due_threshold: int = config.get(const.CONF_DAYS_BEFORE_DUE_THRESHOLD, 0)
         try:
             self._start_date = helpers.to_date(config.get(const.CONF_START_DATE))
         except ValueError:
@@ -483,29 +484,35 @@ class Chore(RestoreEntity):
         self._next_due_date = self.get_next_due_date(self._calculate_start_date())
         if self._next_due_date is not None:
             LOGGER.debug(
-                "(%s) next_due_date (%s), today (%s)",
+                """(%s) next_due_date (%s), today (%s)""",
                 self._attr_name,
                 self._next_due_date,
                 today,
             )
             self._days = (self._next_due_date - today).days
             LOGGER.debug(
-                "(%s) Found next chore date: %s, that is in %d days",
+                """(%s) Found next chore date: %s, that is in %d days""",
                 self._attr_name,
                 self._next_due_date,
                 self._days,
             )
-            self._attr_state = self._days
-            if self._days > 1:
+            if self._days <= self._days_before_due_threshold:
+                self._attr_state = self._days
+                if self._days > 1:
+                    self._attr_icon = self._icon_normal
+                elif self._days < 0:
+                    self._attr_icon = self._icon_overdue
+                elif self._days == 0:
+                    self._attr_icon = self._icon_today
+                elif self._days == 1:
+                    self._attr_icon = self._icon_tomorrow
+                self._overdue = self._days < 0
+                self._overdue_days = 0 if self._days > -1 else abs(self._days)
+            else:
+                self._attr_state = None
                 self._attr_icon = self._icon_normal
-            elif self._days < 0:
-                self._attr_icon = self._icon_overdue
-            elif self._days == 0:
-                self._attr_icon = self._icon_today
-            elif self._days == 1:
-                self._attr_icon = self._icon_tomorrow
-            self._overdue = self._days < 0
-            self._overdue_days = 0 if self._days > -1 else abs(self._days)
+                self._overdue = False
+                self._overdue_days = None
         else:
             self._days = None
             self._attr_state = None
@@ -565,11 +572,11 @@ class Chore(RestoreEntity):
             else date(helpers.now().date().year - 1, 1, 1)
         )
         if (
-            day1 == start_date
+            start_date == start_date
             and self.last_completed is not None
-            and self.last_completed.date() == day1
+            and self.last_completed.date() == start_date
         ):
-            day1 = day1 + relativedelta(days=1)
+            start_date = start_date + relativedelta(days=1)
 
         if self.last_completed is not None:
             last_completed = self.last_completed.date()

@@ -55,6 +55,11 @@ SENSOR_SCHEMA = vol.Schema(
         ),
         vol.Optional(const.CONF_START_DATE): cv.date,
         vol.Optional(const.CONF_DATE_FORMAT): cv.string,
+        vol.Optional(const.CONF_OWNERS): cv.string,
+        vol.Optional(const.CONF_NOTES): cv.string,
+        vol.Optional(const.CONF_DAYS_BEFORE_DUE_THRESHOLD): vol.All(
+            vol.Coerce(int), vol.Range(min=0, max=365)
+        ),
     },
     extra=vol.ALLOW_EXTRA,
 )
